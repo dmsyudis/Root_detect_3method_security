@@ -1,0 +1,80 @@
+/*Root Detection Android*/
+##############METHOD 1####################
+/*Code*/
+public static boolean findBinary(String binaryName) {
+        boolean found = false;
+        if (!found) {
+            String[] places = { "/sbin/", "/system/bin/", "/system/xbin/",
+                    "/data/local/xbin/", "/data/local/bin/",
+                    "/system/sd/xbin/", "/system/bin/failsafe/", "/data/local/",
+                    "/system/app/Superuser.apk", "/sbin/su", "/system/bin/su",
+                    "/system/xbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/system/sd/xbin/su",
+                    "/system/bin/failsafe/su", "/data/local/su", "/su/bin/su", "/su/",
+                    "/data/local/xbin/",
+                    "/system/bin/.ext/",
+                    "/system/bin/failsafe/",
+                    "/system/sd/xbin/",
+                    "/su/xbin/",
+                    "/su/bin/",
+                    "/magisk/.core/bin/",
+                    "/system/usr/we-need-root/",
+                    "/system/xbin/",};
+            for (String where : places) {
+                if (new File(where + binaryName).exists()) {
+                    found = true;
+
+                    break;
+                }
+            }
+        }
+        return found;
+    }
+    private static boolean isRooted() {
+        return findBinary("su");
+    }
+	public void dialog(){
+		/*Condition*/
+	isRooted();
+        if (isRooted()){
+            Toast toast = Toast.makeText(getApplicationContext(), "ROOT DEVICE", Toast.LENGTH_SHORT); toast.show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("ROOT DEVICE!")
+                    .setCancelable(false)
+                    .setPositiveButton("EXIT", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //do things
+                            finish();
+                            System.exit(0);
+                        }
+                    });
+            AlertDialog alert = builder.create();
+            alert.show();
+		}
+	}
+	public void class(){
+		if(condition){
+			dialog(); /*this is dialog method is statement and example*/
+		}else{
+			//statement
+		}
+	}
+##############METHOD 2####################	
+/*Add Gradle (MIN SDK 15)*/
+dependencies {
+    implementation 'com.scottyab:rootbeer-lib:0.0.7'
+}
+/*Code*/
+RootBeer rootBeer = new RootBeer(context);
+if (rootBeer.isRooted()) {
+    //we found indication of root
+} else {
+    //we didn't find indication of root
+}
+
+##############METHOD 3####################	
+/*Using External Library, RootTools using v1.7 (http://www.java2s.com/Code/JarDownload/roottools/roottools-1.7.jar.zip)*/
+/*Code*/
+if(RootTools.isRootAvailable()){
+	//we found indication of root
+    /*Example*/ Toast toast = Toast.makeText(getApplicationContext(), "ROOT DEVICE", Toast.LENGTH_SHORT); toast.show();
+}	
